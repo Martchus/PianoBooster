@@ -62,13 +62,12 @@ QtWindow::QtWindow()
 
     decodeCommandLine();
 
+    QGLFormat fmt = QGLFormat::defaultFormat();
     if (Cfg::experimentalSwapInterval != -1)
     {
-        QGLFormat fmt;
         fmt.setSwapInterval(Cfg::experimentalSwapInterval);
         int value = fmt.swapInterval();
         ppLogInfo("Open GL Swap Interval %d", value);
-        QGLFormat::setDefaultFormat(fmt);
     }
 
     for (int i = 0; i < MAX_RECENT_FILES; ++i)
@@ -79,6 +78,12 @@ QtWindow::QtWindow()
     int rt_prio = sched_get_priority_max(SCHED_FIFO);
     set_realtime_priority(SCHED_FIFO, rt_prio);
 #endif
+
+    if (m_settings->value("anti-aliasing").toString()=="on"){
+        fmt.setSamples(4);
+    }
+
+    QGLFormat::setDefaultFormat(fmt);
 
     m_glWidget = new CGLView(this, m_settings);
     m_glWidget->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -360,6 +365,14 @@ void QtWindow::createActions()
     }
     connect(m_viewPianoKeyboard, SIGNAL(triggered()), this, SLOT(onViewPianoKeyboard()));
 
+    m_antiAliasing = new QAction(tr("Anti-aliasing (4xMXAA)"), this);
+    m_antiAliasing->setCheckable(true);
+    m_antiAliasing->setChecked(false);
+    if (m_settings->value("anti-aliasing").toString()=="on"){
+        m_antiAliasing->setChecked(true);
+    }
+    connect(m_antiAliasing, SIGNAL(triggered()), this, SLOT(toggleAntiAliasing()));
+
     m_setupPreferencesAct = new QAction(tr("&Preferences ..."), this);
     m_setupPreferencesAct->setToolTip(tr("Settings"));
     m_setupPreferencesAct->setShortcut(tr("Ctrl+P"));
@@ -417,6 +430,7 @@ void QtWindow::createMenus()
     m_viewMenu->addAction(m_sidePanelStateAct);
     m_viewMenu->addAction(m_fullScreenStateAct);
     m_viewMenu->addAction(m_viewPianoKeyboard);
+    m_viewMenu->addAction(m_antiAliasing);
 
     m_songMenu = menuBar()->addMenu(tr("&Song"));
     m_songMenu->setToolTipsVisible(true);
@@ -463,6 +477,12 @@ void QtWindow::showMidiSetup(){
     midiSetupDialog.exec();
     m_song->flushMidiInput();
     m_glWidget->startTimerEvent();
+}
+
+void QtWindow::toggleAntiAliasing()
+{
+    m_settings->setValue("anti-aliasing", m_antiAliasing->isChecked() ? "on" : "off");
+    QMessageBox::information(this, windowTitle(), tr("Changing Anti-aliasing takes effect after restarting the application."));
 }
 
 // load the recent file list from the config file into the file menu

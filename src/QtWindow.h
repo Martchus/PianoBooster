@@ -114,6 +114,8 @@ private slots:
         m_sidePanel->setVisible(m_sidePanelStateAct->isChecked());
     }
 
+    void toggleAntiAliasing();
+
     void onViewPianoKeyboard(){
         if (m_viewPianoKeyboard->isChecked()){
             m_settings->setValue("View/PianoKeyboard","on");
@@ -212,6 +214,7 @@ private:
     QAction *m_setupKeyboardAct;
     QAction *m_sidePanelStateAct;
     QAction *m_viewPianoKeyboard;
+    QAction *m_antiAliasing;
     QAction *m_fullScreenStateAct;
     QAction *m_setupPreferencesAct;
     QAction *m_songDetailsAct;
