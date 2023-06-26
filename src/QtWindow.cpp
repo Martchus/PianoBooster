@@ -60,7 +60,7 @@ static int set_realtime_priority(int policy, int prio)
 }
 #endif
 
-class QtLanguageOptionPage : public QtUtilities::OptionPage {
+class QtLanguageOptionPage : public QtUtilities::QtLanguageOptionPage {
 public:
     explicit QtLanguageOptionPage(QtUtilities::QtSettingsData &settings, QWidget *parentWidget = nullptr);
 
@@ -89,7 +89,8 @@ void QtLanguageOptionPage::reset()
 
 QWidget *QtLanguageOptionPage::setupWidget()
 {
-    auto *const widget = QtUtilities::QtLanguageOptionPage::setupWidget();
+    auto *const widget = QtUtilities::QtLanguageOptionPageBase::setupWidget();
+    auto *localeComboBox = widget->findChild<QComboBox *>(QStringLiteral("localeComboBox"));
     return widget;
 }
 
