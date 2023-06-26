@@ -60,6 +60,39 @@ static int set_realtime_priority(int policy, int prio)
 }
 #endif
 
+class QtLanguageOptionPage : public QtUtilities::OptionPage {
+public:
+    explicit QtLanguageOptionPage(QtUtilities::QtSettingsData &settings, QWidget *parentWidget = nullptr);
+
+    bool apply() override;
+    void reset() override;
+
+protected:                                                                                                                                           \
+    QWidget *setupWidget() override;
+
+};
+
+QtLanguageOptionPage::QtLanguageOptionPage(QtUtilities::QtSettingsData &settings, QWidget *parentWidget)
+    : QtUtilities::QtLanguageOptionPage(settings, parentWidget)
+{
+}
+
+bool QtLanguageOptionPage::apply()
+{
+    return true;
+}
+
+void QtLanguageOptionPage::reset()
+{
+
+}
+
+QWidget *QtLanguageOptionPage::setupWidget()
+{
+    auto *const widget = QtUtilities::QtLanguageOptionPage::setupWidget();
+    return widget;
+}
+
 QtWindow::QtWindow(CSettings *settings, QtUtilities::QtSettings *qtSettings, QWidget *parent)
     : QMainWindow(parent)
     , m_settings(settings)
