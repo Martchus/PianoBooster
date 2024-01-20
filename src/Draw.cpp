@@ -681,16 +681,14 @@ void CDraw::drawSymbol(CSymbol symbol, float x, float y, CSlot* slot)
                 glVertex2f(-8.0f + x, -0.0f + y); // 12
             glEnd();
 
-            /*
             // shows the MIDI Duration (but not very useful)
             glLineWidth(4.0f);
             drColor(CColor(0.3, 0.4, 0.4));
             glBegin(GL_LINE_STRIP);
                 glVertex2f(x,  y);
-                glVertex2f(x + CMidiFile::ppqnAdjust<float>(static_cast<float>(symbol.getMidiDuration())) * HORIZONTAL_SPACING_FACTOR, y);
+                glVertex2f(x + CMidiFile::ppqnAdjust<float>(static_cast<float>(symbol.getMidiDuration())) / 32.f, y);
             glEnd();
             drColor(color);
-            */
 
             checkAccidental(symbol, x, y);
             break;
