@@ -198,12 +198,17 @@ int CNotation::cfg_param[NOTATE_MAX_PARAMS];
 
 void CNotation::setupNotationParamaters()
 {
-    cfg_param[NOTATE_semiquaverBoundary] = CMidiFile::ppqnAdjust(DEFAULT_PPQN/4 + 10);
-    cfg_param[NOTATE_quaverBoundary]     = CMidiFile::ppqnAdjust(DEFAULT_PPQN/2 + 10);
-    cfg_param[NOTATE_crotchetBoundary]   = CMidiFile::ppqnAdjust(DEFAULT_PPQN + 10);
-    cfg_param[NOTATE_minimBoundary]      = CMidiFile::ppqnAdjust(DEFAULT_PPQN*2 + 10);
-    cfg_param[NOTATE_threequaterBoundary]= CMidiFile::ppqnAdjust(DEFAULT_PPQN*3 + 10);
-    cfg_param[NOTATE_semibreveBoundary]  = CMidiFile::ppqnAdjust(DEFAULT_PPQN*4 + 10);
+    cfg_param[NOTATE_demisemiquaverBoundary]    = CMidiFile::ppqnAdjust(DEFAULT_PPQN/8 + DEFAULT_PPQN/8 + 1);
+    cfg_param[NOTATE_threesixtyforthBoundary]   = CMidiFile::ppqnAdjust(DEFAULT_PPQN/8 + DEFAULT_PPQN/16 + 1);
+    cfg_param[NOTATE_semiquaverBoundary]        = CMidiFile::ppqnAdjust(DEFAULT_PPQN/4 + 2);
+    cfg_param[NOTATE_threethirtysecondBoundary] = CMidiFile::ppqnAdjust(DEFAULT_PPQN/4 + DEFAULT_PPQN/8 + 2);
+    cfg_param[NOTATE_quaverBoundary]            = CMidiFile::ppqnAdjust(DEFAULT_PPQN/2 + 5);
+    cfg_param[NOTATE_threesixteenthBoundary]    = CMidiFile::ppqnAdjust(DEFAULT_PPQN/2 + DEFAULT_PPQN/4 + 5);
+    cfg_param[NOTATE_crotchetBoundary]          = CMidiFile::ppqnAdjust(DEFAULT_PPQN + 10);
+    cfg_param[NOTATE_threeeighthBoundary]       = CMidiFile::ppqnAdjust(DEFAULT_PPQN + DEFAULT_PPQN/2 + 10);
+    cfg_param[NOTATE_minimBoundary]             = CMidiFile::ppqnAdjust(DEFAULT_PPQN*2 + 10);
+    cfg_param[NOTATE_threequaterBoundary]       = CMidiFile::ppqnAdjust(DEFAULT_PPQN*3 + 10);
+    cfg_param[NOTATE_semibreveBoundary]         = CMidiFile::ppqnAdjust(DEFAULT_PPQN*4 + 10);
 }
 
 void CNotation::calculateScoreNoteLength()
@@ -221,20 +226,17 @@ void CNotation::calculateScoreNoteLength()
 
         // you may get better results assuming all the notes are legato
         // ie assume that this note ends at the exact time the following note starts.
-        long midiDuration = symbol->getMidiDuration();
-
-        if (midiDuration < cfg_param[NOTATE_semiquaverBoundary] )
-            symbol->setNoteLength(PB_SYMBOL_semiquaver);
-        if (midiDuration < cfg_param[NOTATE_quaverBoundary] )
-            symbol->setNoteLength(PB_SYMBOL_quaver);
-        else if (midiDuration < cfg_param[NOTATE_crotchetBoundary] )
-            symbol->setNoteLength(PB_SYMBOL_crotchet);
-        else if (midiDuration < cfg_param[NOTATE_minimBoundary] )
-            symbol->setNoteLength(PB_SYMBOL_minim);
-        else if (midiDuration < cfg_param[NOTATE_threequaterBoundary] )
-            symbol->setNoteLength(PB_SYMBOL_threequater);
-        else
-            symbol->setNoteLength(PB_SYMBOL_semibreve);
+        auto midiDuration = symbol->getMidiDuration();
+        auto param = static_cast<int>(NOTATE_demisemiquaverBoundary);
+        auto noteLength = static_cast<int>(PB_SYMBOL_noteHead) + 1;
+        for (; param != NOTATE_MAX_PARAMS; ++param, ++noteLength) {
+            if (midiDuration < cfg_param[param]) {
+                break;
+            }
+        }
+        if (param != NOTATE_MAX_PARAMS) {
+            symbol->setNoteLength(static_cast<musicalSymbol_t>(noteLength));
+        }
     }
 }
 

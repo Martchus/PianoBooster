@@ -159,14 +159,18 @@ private:
 
 enum {
     NOTATE_demisemiquaverBoundary,       // Demisemiquaver / Thirty-second note
+    NOTATE_threesixtyforthBoundary,      // Three-sixtyforth note (thirty-second note with dot)
     NOTATE_semiquaverBoundary,           // Semiquaver / Sixteenth note
+    NOTATE_threethirtysecondBoundary,    // Three-thirty-second note (sixteenth note with dot)
     NOTATE_quaverBoundary,               // Quaver / Eighth note
+    NOTATE_threesixteenthBoundary,       // Three-sixteenth note (eighth note with dot)
     NOTATE_crotchetBoundary,             // Crotchet / Quarter note
+    NOTATE_threeeighthBoundary,          // Three-eighth note (quarter note with dot)
     NOTATE_minimBoundary,                // Minim / Half note
     NOTATE_threequaterBoundary,          // Three-quater note (half note with dot)
     NOTATE_semibreveBoundary,            // Semibreve / Whole note
     NOTATE_breveBoundary,                // Breve / Double whole note
-    NOTATE_MAX_PARAMS                   // == MUST BE LAST ===
+    NOTATE_MAX_PARAMS                    // == MUST BE LAST ===
 };
 
 // Define a chord

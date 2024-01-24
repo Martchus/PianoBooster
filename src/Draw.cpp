@@ -376,23 +376,23 @@ bool CDraw::drawNote(CSymbol* symbol, float x, float y, CSlot* slot, CColor colo
     }
     drawStaveExtentsion(*symbol, x, 16, playable);
     drColor(color);
-    bool solidNoteHead = false;
-    bool showNoteStem = false;
-    int stemFlagCount = 0;
 
-    if (symbol->getType() <= PB_SYMBOL_semiquaver)
+    const auto noteLength = symbol->getType();
+    auto solidNoteHead = false;
+    auto showNoteStem = false;
+    auto stemFlagCount = 0;
+    if (noteLength <= PB_SYMBOL_demisemiquaver)
+        stemFlagCount = 3;
+    else if (noteLength <= PB_SYMBOL_semiquaver)
         stemFlagCount = 2;
-    else if (symbol->getType() <= PB_SYMBOL_quaver)
+    else if (noteLength <= PB_SYMBOL_quaver)
         stemFlagCount = 1;
-
-    if (symbol->getType() <= PB_SYMBOL_crotchet)
+    if (noteLength <= PB_SYMBOL_crotchet)
         solidNoteHead = true;
-
-    if (symbol->getType() <= PB_SYMBOL_threequater)
+    if (noteLength <= PB_SYMBOL_threequater)
         showNoteStem = true;
 
-    if (showNoteStem)
-    {
+    if (showNoteStem) {
         if (!solidNoteHead)
             noteWidth += 1.0f;
         glLineWidth(2.0f);
@@ -403,9 +403,7 @@ bool CDraw::drawNote(CSymbol* symbol, float x, float y, CSlot* slot, CColor colo
     }
 
     float offset = stemLength;
-    while (stemFlagCount>0)
-    {
-
+    while (stemFlagCount > 0) {
         glLineWidth(2.0);
         glBegin(GL_LINE_STRIP);
             glVertex2f(noteWidth + x, offset  + y); // 1
@@ -415,8 +413,7 @@ bool CDraw::drawNote(CSymbol* symbol, float x, float y, CSlot* slot, CColor colo
         stemFlagCount--;
     }
 
-    if (solidNoteHead)
-    {
+    if (solidNoteHead) {
         glBegin(GL_POLYGON);
             glVertex2f(-7.0f + x,  2.0f + y); // 1
             glVertex2f(-5.0f + x,  4.0f + y); // 2
@@ -431,9 +428,7 @@ bool CDraw::drawNote(CSymbol* symbol, float x, float y, CSlot* slot, CColor colo
             glVertex2f(-8.0f + x, -3.0f + y); // 11
             glVertex2f(-8.0f + x, -0.0f + y); // 12
         glEnd();
-    }
-    else
-    {
+    } else {
         glLineWidth(2.0);
         glBegin(GL_LINE_STRIP);
             glVertex2f(-7.0f + x,  2.0f + y); // 1
@@ -452,7 +447,8 @@ bool CDraw::drawNote(CSymbol* symbol, float x, float y, CSlot* slot, CColor colo
     }
 
     // draw a circle after the half note to make it a three-quater note
-    if (symbol->getType() == PB_SYMBOL_threequater) {
+    const auto isDottedNote = (noteLength < PB_SYMBOL_breve) && ((noteLength - PB_SYMBOL_noteHead) % 2 == 0);
+    if (isDottedNote) {
         static constexpr auto radius = 4.0f;
         x += 15.0f;
         glBegin(GL_POLYGON);

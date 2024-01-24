@@ -50,11 +50,15 @@ typedef enum
 
     PB_SYMBOL_noteHead,             // ONLY ADD NOTES BELOW THIS MAKER
     PB_SYMBOL_demisemiquaver,       // Demisemiquaver / Thirty-second note
+    PB_SYMBOL_threesixtyforth,      // Three-sixtyforth note (thirty-second note with dot)
     PB_SYMBOL_semiquaver,           // Semiquaver / Sixteenth note
+    PB_SYMBOL_threethirtysecond,    // Three-thirty-second note (sixteenth note with dot)
     PB_SYMBOL_quaver,               // Quaver / Eighth note
+    PB_SYMBOL_threesixteenth,       // Three-sixteenth note (eighth note with dot)
     PB_SYMBOL_crotchet,             // Crotchet / Quarter note
+    PB_SYMBOL_threeeighth,          // Three-eighth note (quarter note with dot)
     PB_SYMBOL_minim,                // Minim / Half note
-    PB_SYMBOL_threequater,          // Three-quater note
+    PB_SYMBOL_threequater,          // Three-quater note (half note with dot)
     PB_SYMBOL_semibreve,            // Semibreve / Whole note
     PB_SYMBOL_breve,                // Breve / Double whole note
 
