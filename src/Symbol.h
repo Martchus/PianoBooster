@@ -60,6 +60,7 @@ typedef enum
     PB_SYMBOL_minim,                // Minim / Half note
     PB_SYMBOL_threequater,          // Three-quater note (half note with dot)
     PB_SYMBOL_semibreve,            // Semibreve / Whole note
+    PB_SYMBOL_sixquater,            // Six-quater note (half note with dot tied with another)
     PB_SYMBOL_breve,                // Breve / Double whole note
 
 } musicalSymbol_t;

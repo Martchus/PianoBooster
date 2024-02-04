@@ -169,6 +169,7 @@ enum {
     NOTATE_minimBoundary,                // Minim / Half note
     NOTATE_threequaterBoundary,          // Three-quater note (half note with dot)
     NOTATE_semibreveBoundary,            // Semibreve / Whole note
+    NOTATE_sixquaterBoundary,            // Six-quater note (half note with dot tied with another)
     NOTATE_breveBoundary,                // Breve / Double whole note
     NOTATE_MAX_PARAMS                    // == MUST BE LAST ===
 };

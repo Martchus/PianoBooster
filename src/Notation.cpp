@@ -209,6 +209,7 @@ void CNotation::setupNotationParamaters()
     cfg_param[NOTATE_minimBoundary]             = CMidiFile::ppqnAdjust(DEFAULT_PPQN*2 + 10);
     cfg_param[NOTATE_threequaterBoundary]       = CMidiFile::ppqnAdjust(DEFAULT_PPQN*3 + 10);
     cfg_param[NOTATE_semibreveBoundary]         = CMidiFile::ppqnAdjust(DEFAULT_PPQN*4 + 10);
+    cfg_param[NOTATE_sixquaterBoundary]         = CMidiFile::ppqnAdjust(DEFAULT_PPQN*6 + 10);
     cfg_param[NOTATE_breveBoundary]             = CMidiFile::ppqnAdjust(DEFAULT_PPQN*8 + 10);
 }
 
