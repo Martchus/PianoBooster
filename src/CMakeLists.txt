@@ -149,7 +149,26 @@ include(BasicConfig)
 
 # find OpenGL
 set(OpenGL_GL_PREFERENCE "GLVND")
+if (ANDROID)
+    set(USE_OPENGL_ES ON)
+    set(OPENGL_INCLUDE_DIR "${CMAKE_SYSROOT}/usr/include")
+    if (ANDROID_TOOLCHAIN_NAME MATCHES "(.*)(-clang)")
+        set(OPENGL_opengl_LIBRARY "${CMAKE_SYSROOT}/usr/lib/${CMAKE_MATCH_1}/${ANDROID_NATIVE_API_LEVEL}/libGLESv2.so")
+        set(OPENGL_glx_LIBRARY "${CMAKE_SYSROOT}/usr/lib/${CMAKE_MATCH_1}/${ANDROID_NATIVE_API_LEVEL}/libGLX.so")
+    endif ()
+    message(STATUS "OpenGL library: ${OPENGL_opengl_LIBRARY}")
+    if (NOT EXISTS "${OPENGL_INCLUDE_DIR}" OR NOT EXISTS "${OPENGL_opengl_LIBRARY}")
+        message(FATAL_ERROR "Unable to find OpenGL.")
+    endif ()
+endif ()
+if (NOT USE_OPENGL_ES)
+    option(USE_OPENGL_ES "Whether to use OpenGL ES (instead of regular OpenGL)" OFF)
+endif ()
 find_package(OpenGL REQUIRED)
+if (USE_OPENGL_ES)
+    add_compile_options("-DUSE_OPENGL_ES")
+    set(OPENGL_LIBRARIES ${OPENGL_gles2_LIBRARY})
+endif ()
 
 # find pkg-config
 if (NOT WIN32 OR MINGW)
@@ -319,7 +338,7 @@ target_link_libraries("${META_TARGET_NAME}" PRIVATE ${OPENGL_LIBRARIES} ${FTGL_L
                                                     ${FLUIDSYNTH_LIBRARY} ${RTMIDI_LIBRARY})
 
 # install various additional files
-if (NOT APPLE)
+if (NOT APPLE AND NOT ANDROID)
     install(FILES ../pianobooster.desktop DESTINATION share/applications)
     install(TARGETS "${META_TARGET_NAME}" RUNTIME DESTINATION ${CMAKE_INSTALL_BINDIR})
 endif (NOT APPLE)

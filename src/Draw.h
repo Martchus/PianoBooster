@@ -32,12 +32,16 @@
   #include <windows.h>
 #endif
 
+#ifdef USE_OPENGL_ES
+  #include <GLES2/gl2.h>
+#else
 #ifdef __APPLE__
   #include <OpenGL/gl.h>
   #include <OpenGL/glu.h>
 #else
   #include <GL/gl.h>
   #include <GL/glu.h>
+#endif
 #endif
 #ifndef NO_USE_FTGL
 #include <FTGL/ftgl.h>
@@ -81,14 +85,6 @@ public:
 #endif
     }
 
-    void scrollVertex(float x, float y)
-    {
-        if (m_scrollProperties->horizontal())
-            glVertex2f (x,y);
-        else
-            glVertex2f (y,x);
-    }
-
     void drawSymbol(CSymbol symbol, float x, float y, CSlot* slot = 0);
     void drawSymbol(CSymbol symbol, float x);
     void drawSlot(CSlot* slot);
@@ -99,7 +95,9 @@ public:
         m_forceCompileRedraw = 1;
     }
     static whichPart_t getDisplayHand()    {return m_displayHand;}
+#ifndef USE_OPENGL_ES
     static void drColor(CColor color) { glColor3f(color.red, color.green, color.blue);}
+#endif
     static void forceCompileRedraw(int value = 1) {    m_forceCompileRedraw = value; }
 
 protected:
