@@ -1,4 +1,4 @@
-cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
+cmake_minimum_required(VERSION 3.17.0 FATAL_ERROR)
 
 # set meta data: I am treating is for now a fork as upstream does not merge any patches anymore. Hence I am putting myself as
 # author here and use my fork's URL.
