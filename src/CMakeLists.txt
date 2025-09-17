@@ -238,7 +238,6 @@ if (WITH_INTERNAL_FLUIDSYNTH)
         set(FLUIDSYNTH_LIBRARY FluidSynth::libfluidsynth)
 
         # find additional dependencies that are pulled in by the imported target but not automatically made available
-        find_package(OpenMP REQUIRED)
         if (COMMAND pkg_check_modules)
             pkg_check_modules(GLIB IMPORTED_TARGET glib-2.0 gthread-2.0)
             pkg_check_modules(LIBSNDFILE IMPORTED_TARGET sndfile)
