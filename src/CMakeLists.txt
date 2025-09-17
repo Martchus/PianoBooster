@@ -17,6 +17,10 @@ set(META_VERSION_MINOR 0)
 set(META_VERSION_PATCH 1)
 set(META_RELEASE_DATE "2023-05-06")
 
+# disable Wayland support when linking against static Qt as this did not work in my tests so far
+option(NATIVE_WAYLAND_SUPPORT "whether to enable native Wayland support (when linking against static Qt)" OFF)
+option(NATIVE_WAYLAND_EGL_SUPPORT "specifies whether to enable native Wayland-EGL support (when linking against static Qt)" OFF)
+
 set(SRC_FILES
     MidiFile.cpp
     MidiTrack.cpp
@@ -116,8 +120,7 @@ set(REQUIRED_ICONS
     system-search
     view-fullscreen
     view-left-pane-symbolic
-    window-close
-)
+    window-close)
 
 option(WITH_INTERNAL_FLUIDSYNTH "Build with an internal FluidSynth sound generator" ON)
 option(USE_FTGL "Build with ftgl for notes localization" ON)
@@ -142,7 +145,7 @@ if (NOT DATA_DIR)
     set(DATA_DIR "share/games/pianobooster")
 endif ()
 add_compile_options("-DDATA_DIR=\"${DATA_DIR}\"")
-set(CMAKE_INSTALL_DATAROOTDIR "share/games")  # used by c++/qtutilities
+set(CMAKE_INSTALL_DATAROOTDIR "share/games") # used by c++/qtutilities
 
 # apply basic configuration
 include(BasicConfig)
