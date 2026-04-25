@@ -23,6 +23,7 @@
 #include <qtutilities/resources/resources.h>
 
 #include <QApplication>
+#include <QByteArray>
 
 #include <cstdio>
 #include <cstdlib>
@@ -32,6 +33,15 @@
 #include "resources/config.h"
 
 int main(int argc, char *argv[]) {
+    #ifdef Q_OS_LINUX
+    if (qEnvironmentVariableIsEmpty("QT_QPA_PLATFORM")
+        && qEnvironmentVariableIsSet("WAYLAND_DISPLAY")
+        && qEnvironmentVariableIsSet("DISPLAY")) {
+        qputenv("QT_QPA_PLATFORM", QByteArrayLiteral("xcb"));
+        fprintf(stderr, "Info: forcing QT_QPA_PLATFORM=xcb under Wayland\n");
+    }
+    #endif
+
     // instantiate app and apply sensible default settings
     SET_QT_APPLICATION_INFO;
     QGuiApplication::setDesktopFileName(QStringLiteral(PROJECT_NAME));
