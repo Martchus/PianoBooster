@@ -31,6 +31,8 @@
 
 #include <assert.h>
 
+#include <atomic>
+
 // A Queue or circular buffer also also call a FIFO a First In First Out buffer
 // different threads could be running each end of the queue
 
@@ -118,8 +120,7 @@ private:
     int m_head;
     int m_tail;
 
-    // this should be atomic operation when two different threads are at each end of the queue
-    volatile int m_count;
+    std::atomic_int m_count;
 };
 
 #endif //__QUEUE_H__
