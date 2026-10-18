@@ -225,7 +225,6 @@ int CTrackList::findFreeChannel(int startChannel)
 
 void CTrackList::refresh()
 {
-    int rowCount = 0;
     m_partsList.clear();
 
     for (int chan = 0; chan < MAX_MIDI_CHANNELS; chan++)
@@ -233,7 +232,6 @@ void CTrackList::refresh()
         if (m_midiChannels[chan].active())
         {
             m_partsList.append(CTrackListItem(chan));
-            rowCount++;
         }
     }
 
