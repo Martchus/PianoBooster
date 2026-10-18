@@ -382,7 +382,7 @@ void QtWindow::createActions()
     m_fullScreenStateAct->setCheckable(true);
     connect(m_fullScreenStateAct, SIGNAL(triggered()), this, SLOT(onFullScreenStateAct()));
 
-    m_sidePanelStateAct = new QAction(QIcon::fromTheme(QStringLiteral("view-left-pane-symbolic")), tr("&Show the Side Panel"), this);
+    m_sidePanelStateAct = new QAction(QIcon::fromTheme(QStringLiteral("sidebar-show-symbolic")), tr("&Show the Side Panel"), this);
     m_sidePanelStateAct->setToolTip(tr("Show the Left Side Panel"));
     m_sidePanelStateAct->setShortcut(tr("F12"));
     m_sidePanelStateAct->setCheckable(true);

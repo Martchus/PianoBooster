@@ -114,12 +114,11 @@ set(REQUIRED_ICONS
     music-note-16th
     preferences-desktop-icons
     preferences-desktop-locale
-    qtcreator
     system-file-manager
     system-run
     system-search
     view-fullscreen
-    view-left-pane-symbolic
+    sidebar-show-symbolic
     window-close)
 
 option(WITH_INTERNAL_FLUIDSYNTH "Build with an internal FluidSynth sound generator" ON)
