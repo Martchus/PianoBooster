@@ -106,7 +106,15 @@ set(REQUIRED_ICONS
     dialog-ok
     dialog-ok-apply
     document-open
+    edit-copy
     edit-clear
+    edit-cut
+    edit-delete
+    edit-paste
+    edit-redo
+    edit-undo
+    edit-select
+    edit-select-all
     globe
     help-about-symbolic
     help-hint
